@@ -1,0 +1,16 @@
+reviews.points.describe() #number-> count, mean, 75, max/ text -> count, unique, top,
+reviews.points.mean()
+reviews.taster_name.unique()
+reviews.value_counts()
+
+reviews.points.map(lambda p: p - reviews.points.mean())
+
+def remean_options(row):
+    row.points = row.points - review_points_mean
+    return row
+
+reviews.apply(remean_options, axis='columns')
+
+pd.Dataframe.max()
+pd.Dataframe.min()
+pd.Dataframe.idxmax()
