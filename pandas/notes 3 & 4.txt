@@ -14,3 +14,26 @@ reviews.apply(remean_options, axis='columns')
 pd.Dataframe.max()
 pd.Dataframe.min()
 pd.Dataframe.idxmax()
+
+
+## GROUPING AND SORTING ########################################################
+## Grouping
+reviews.groupby('points').points.count()
+reviews.groupby('winery').apply(lambda df: df.title.iloc[0])
+
+
+reviews.groupby(['country', 'province']).apply(lambda df: df.loc[df.points.idxmax()])
+
+reviews.groupby(['country']).price.agg([len, min, max])
+
+reviews.groupby(['country', 'province']).description.agg([len])
+# _________ |_________________|_len
+# Argentina | Mendoza Province|3264     MultiIndexTable
+# _________ | Other___________|_536
+https://pandas.pydata.org/pandas-docs/stable/user_guide/advanced.html
+
+countries_reviewed.reset_index()
+
+## SORTING
+countries_reviewed.sort_values(by=['len', 'country'], ascending=False)
+
