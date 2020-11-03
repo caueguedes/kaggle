@@ -1,0 +1,41 @@
+## Data Types cleaning data ################################################
+# DataTypes
+reviews.price.dtype # dtype('float64')
+reviews.points.satype('float64')
+
+
+# cleaning data
+reviews[pd.isnull(reviews.country)] # notnull
+reviews.region_2.fillna("Unknown") # fill NaN
+
+reviews.taster_twitter_handle.replace("@kerinokeefe", "@kerino")
+
+## Equivalent
+missing_price_reviews = reviews[reviews.price.isnull()]
+n_missing_prices = len(missing_price_reviews)
+# OR
+n_missing_price = reviews.prices.isnull().sum()
+# OR
+n_missing_prices = pd.isnull(reviews.price).sum()
+
+
+## Renaming and combining ######################################################
+# Renaming
+reviews.rename(columns={'points': 'score'})
+reviews.rename(index={0: 'firstEntry', 1: 'secondEntry'})
+
+reviews.rename_axis("wines", axis='rows').rename_axis("fields", axis='columns')
+
+
+# Combining
+# .concat() / .join()/ .merge()
+canadian_youtube = pd.read_csv("../input/youtube-new/CAvideos.csv")
+british_youtube = pd.read_csv("../input/youtube-new/GBvideos.csv")
+
+pd.concat([canadian_youtube, british_youtube]) # same as union
+
+
+left = canadian_youtube.set_index(['title', 'trending_date'])
+right = british_youtube.set_index(['title', 'trending_date'])
+
+left.join(right, lsuffix='_CAN', rsuffix='_UK') # same as left join ON same index
